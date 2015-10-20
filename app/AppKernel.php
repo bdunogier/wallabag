@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new Wallabag\UserBundle\WallabagUserBundle(),
             new Scheb\TwoFactorBundle\SchebTwoFactorBundle(),
             new KPhoen\RulerZBundle\KPhoenRulerZBundle(),
+            new Wallabag\ImportBundle\WallabagImportBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
