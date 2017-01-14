@@ -23,7 +23,7 @@ class HttpClientFactory
     /**
      * HttpClientFactory constructor.
      *
-     * @param \GuzzleHttp\Event\SubscriberInterface $authenticatorSubscriber Deprecated since 2.2. Use addSubscriber instead.
+     * @param \GuzzleHttp\Event\SubscriberInterface $authenticatorSubscriber Deprecated since 2.2. Use addSubscriber instead
      * @param \GuzzleHttp\Cookie\CookieJar          $cookieJar
      * @param string                                $restrictedAccess        this param is a kind of boolean. Values: 0 or 1
      */
@@ -58,6 +58,11 @@ class HttpClientFactory
         return $client;
     }
 
+    /**
+     * Adds a subscriber to the HTTP client.
+     *
+     * @param SubscriberInterface $subscriber
+     */
     public function addSubscriber(SubscriberInterface $subscriber)
     {
         $this->subscribers[] = $subscriber;
