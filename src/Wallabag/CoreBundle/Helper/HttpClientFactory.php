@@ -12,8 +12,8 @@ use GuzzleHttp\Event\SubscriberInterface;
  */
 class HttpClientFactory
 {
-    /** @var \GuzzleHttp\Event\SubscriberInterface */
-    private $authenticatorSubscriber;
+    /** @var [\GuzzleHttp\Event\SubscriberInterface] */
+    private $subscribers = [];
 
     /** @var \GuzzleHttp\Cookie\CookieJar */
     private $cookieJar;
@@ -23,13 +23,15 @@ class HttpClientFactory
     /**
      * HttpClientFactory constructor.
      *
-     * @param \GuzzleHttp\Event\SubscriberInterface $authenticatorSubscriber
+     * @param \GuzzleHttp\Event\SubscriberInterface $authenticatorSubscriber Deprecated since 2.2. Use addSubscriber instead.
      * @param \GuzzleHttp\Cookie\CookieJar          $cookieJar
      * @param string                                $restrictedAccess        this param is a kind of boolean. Values: 0 or 1
      */
-    public function __construct(SubscriberInterface $authenticatorSubscriber, CookieJar $cookieJar, $restrictedAccess)
+    public function __construct($authenticatorSubscriber, CookieJar $cookieJar, $restrictedAccess)
     {
-        $this->authenticatorSubscriber = $authenticatorSubscriber;
+        if ($authenticatorSubscriber !== null) {
+            $this->subscribers[] = $authenticatorSubscriber;
+        }
         $this->cookieJar = $cookieJar;
         $this->restrictedAccess = $restrictedAccess;
     }
@@ -47,8 +49,17 @@ class HttpClientFactory
         $this->cookieJar->clear();
         // need to set the (shared) cookie jar
         $client = new Client(['handler' => new SafeCurlHandler(), 'defaults' => ['cookies' => $this->cookieJar]]);
-        $client->getEmitter()->attach($this->authenticatorSubscriber);
+        if (!empty($this->subscribers)) {
+            foreach ($this->subscribers as $subscriber) {
+                $client->getEmitter()->attach($subscriber);
+            }
+        }
 
         return $client;
+    }
+
+    public function addSubscriber(SubscriberInterface $subscriber)
+    {
+        $this->subscribers[] = $subscriber;
     }
 }
