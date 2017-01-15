@@ -71,7 +71,6 @@ services:
     wallabag_core.guzzle.http_client_factory:
         class: Wallabag\CoreBundle\Helper\HttpClientFactory
         arguments:
-            - ~
             - "@wallabag_core.guzzle.cookie_jar"
             - '@=service(''craue_config'').get(''restricted_access'')'
         calls:
