@@ -65,6 +65,7 @@
         "liip/theme-bundle": "~1.1",
         "lexik/form-filter-bundle": "~5.0",
         "j0k3r/graby": "~1.0",
+        "j0k3r/graby-site-config": "dev-monde-diplomatique.fr as 1.0.29",
         "friendsofsymfony/user-bundle": "2.0.x-dev",
         "friendsofsymfony/oauth-server-bundle": "^1.5",
         "stof/doctrine-extensions-bundle": "^1.2",
@@ -84,7 +85,7 @@
         "javibravo/simpleue": "^1.0",
         "symfony/dom-crawler": "^3.1",
         "friendsofsymfony/jsrouting-bundle": "^1.6",
-        "bdunogier/guzzle-site-authenticator": "^1.0@beta"
+        "bdunogier/guzzle-site-authenticator": "dev-callback_forms"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "~2.2",
@@ -134,5 +135,11 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/bdunogier/graby-site-config.git"
+        }
+    ]
 }
